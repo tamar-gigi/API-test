@@ -8,15 +8,8 @@ import logging
 # Creating a log file for documentation
 logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
 
-try:
-    # Setting up the driver
-    driver = webdriver.Chrome(executable_path=r"C:\Users\User\Downloads\chromedriver_win32\chromedriver.exe")
-    # Entering the website through the driver
-    driver.get("https://www.demoblaze.com/")
 
-    # Waiting - because the driver works faster than the loading time of the browser, it is necessary to wait for the website to load
-    driver.implicitly_wait(10)
-
+def login():
     # Login button search
     driver.find_element(By.LINK_TEXT, "Log in").click()
     # Entering the username and password in the appropriate places
@@ -28,6 +21,8 @@ try:
     # Waiting for the page to load
     time.sleep(5)
 
+
+def add_nexus():
     # Nexus 6 product search
     element = driver.find_element(By.LINK_TEXT, 'Nexus 6')
     # Checking if the product found is Nexus 6
@@ -45,12 +40,17 @@ try:
     assert driver.find_element(By.XPATH, '//h2[@class="name"]').text == 'Nexus 6', 'The name is not worth it Nexus 6'
     # Adding the product to the cart
     driver.find_element(By.LINK_TEXT, 'Add to cart').click()
+
+
+def move_cart():
     # Beyond the cart
     driver.find_element(By.LINK_TEXT, 'Cart').click()
 
     # Waiting for the page to load
     time.sleep(5)
 
+
+def validate():
     # Creating a dataframe from a list of products in the cart
     table = pd.read_html(driver.page_source)[0]
 
@@ -60,6 +60,24 @@ try:
     assert table['Price'][0] == 650, 'The price is not worth 650'
     # Checking if the name of the product in the cart is a Nexus 6
     assert table['Title'][0] == 'Nexus 6', 'The name is not worth it Nexus 6'
+
+
+try:
+    # Setting up the driver
+    driver = webdriver.Chrome(executable_path=r"C:\Users\User\Downloads\chromedriver_win32\chromedriver.exe")
+    # Entering the website through the driver
+    driver.get("https://www.demoblaze.com/")
+
+    # Waiting - because the driver works faster than the loading time of the browser, it is necessary to wait for the website to load
+    driver.implicitly_wait(10)
+
+    login()
+
+    add_nexus()
+
+    move_cart()
+
+    validate()
 
     # Logging success When the program was successful
     logging.info("Success, the program is working as expected")
