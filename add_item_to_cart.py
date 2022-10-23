@@ -13,8 +13,6 @@ try:
     driver = webdriver.Chrome(executable_path=r"C:\Users\User\Downloads\chromedriver_win32\chromedriver.exe")
     # Entering the website through the driver
     driver.get("https://www.demoblaze.com/")
-    # Enlarge the browser window
-    driver.maximize_window()
 
     # Waiting - because the driver works faster than the loading time of the browser, it is necessary to wait for the website to load
     driver.implicitly_wait(10)
