@@ -8,7 +8,6 @@ import logging
 
 logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
 
-
 try:
     driver = webdriver.Chrome(executable_path=r"C:\Users\User\Downloads\chromedriver_win32\chromedriver.exe")
     wait = WebDriverWait(driver, 500)
