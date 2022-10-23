@@ -5,7 +5,7 @@ import time
 import pandas as pd
 import logging
 
-# Creating a log file for documentation 
+# Creating a log file for documentation
 logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
 
 try:
