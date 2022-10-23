@@ -4,6 +4,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
 import pandas
+import logging
+
+logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
 
 try:
     driver = webdriver.Chrome(executable_path=r"C:\Users\User\Downloads\chromedriver_win32\chromedriver.exe")
@@ -33,9 +36,10 @@ try:
     assert len(table) == 1, 'More than one item'
     assert table['Price'][0] == 650, 'The price is not worth 650'
     assert table['Title'][0] == 'Nexus 6', 'The name is not worth it Nexus 6'
-    print('Succeeded!!!!!!!!!!')
+
+    logging.info("The program is working as expected")
 
 except AssertionError as msg:
-    print(msg)
+    logging.error(msg)
 except NoSuchElementException:
-    print('The element was not found')
+    logging.critical('The element was not found')
