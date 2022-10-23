@@ -3,7 +3,7 @@ from selenium.common import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
-import pandas
+import pandas as pd
 import logging
 
 logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
@@ -23,15 +23,18 @@ try:
     time.sleep(5)
 
     element = driver.find_element(By.LINK_TEXT, 'Nexus 6')
+    assert element.text == 'Nexus 6', 'The name is not worth it Nexus 6'
     link = element.get_attribute('href')
     assert link[-1] == '3', 'No find was found whose ID is equal to 3'
     element.click()
+
+    assert driver.find_element(By.XPATH, '//h2[@class="name"]').text == 'Nexus 6', 'The name is not worth it Nexus 6'
     driver.find_element(By.LINK_TEXT, 'Add to cart').click()
     driver.find_element(By.LINK_TEXT, 'Cart').click()
 
     time.sleep(5)
 
-    table = pandas.read_html(driver.page_source)[0]
+    table = pd.read_html(driver.page_source)[0]
 
     assert len(table) == 1, 'More than one item'
     assert table['Price'][0] == 650, 'The price is not worth 650'
