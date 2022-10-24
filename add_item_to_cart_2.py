@@ -2,6 +2,8 @@
 import requests
 import base64
 import logging
+import numpy
+import math
 
 # Creating a log file for documentation
 logging.basicConfig(filename="message_log_2.log", level=logging.INFO, format="%(asctime)s %(message)s")
@@ -21,6 +23,16 @@ message_price = 'The price is not worth 650'
 message_count = 'More than one item'
 
 
+def _num2chr(num):
+    return hex(num)[2:]
+
+# A function that creates a BASE64 ID
+def guid():
+    def s4():
+        return _num2chr(math.floor((1 + numpy.random.random()) * 0x10000))[1:]
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
+
+
 def Login():
     # Converting the password to BASE64
     b64_password = base64.b64encode(bytes(password, 'utf-8')).decode('utf-8')
@@ -32,8 +44,8 @@ def Login():
 
 
 def Add_to_cart(cookie):
-    # Creating an add-to-cart object that consists of an ID (actually generated randomly each time by the GUID function, I couldn't create it), the token, a flag, and a product ID
-    add = {"id": "0cbfca6b-2029-91cb-28c8-ba14333e252c", "cookie": cookie.text, "prod_id": str(item[-1]), "flag": True}
+    # Creating an add-to-cart object that consists of an ID , the token, a flag, and a product ID
+    add = {"id": guid(), "cookie": cookie.text, "prod_id": str(item[-1]), "flag": True}
     # Adding the product to the basket
     requests.post(API_URL+'addtocart', json=add, verify=False)
 
