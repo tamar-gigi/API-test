@@ -26,6 +26,7 @@ message_count = 'More than one item'
 def _num2chr(num):
     return hex(num)[2:]
 
+
 # A function that creates a BASE64 ID
 def guid():
     def s4():
@@ -40,19 +41,20 @@ def Login():
     login = {"username": user_name, "password": b64_password}
     # Calling a server and receiving the token
     token1 = requests.post(API_URL+'login', json=login, verify=False)
-    return token1
+    return token1.json()
 
 
 def Add_to_cart(cookie):
+    id1 = guid()
     # Creating an add-to-cart object that consists of an ID , the token, a flag, and a product ID
-    add = {"id": guid(), "cookie": cookie.text, "prod_id": str(item[-1]), "flag": True}
+    add = {"id": id1, "cookie": cookie.split(":")[-1][1:], "prod_id": str(item[-1]), "flag": True}
     # Adding the product to the basket
     requests.post(API_URL+'addtocart', json=add, verify=False)
 
 
 def move_to_cart(cookie):
     # Pass to the cart by the fixer and flag
-    view = {"cookie": cookie.json().split(":")[-1][1:], "flag": True}
+    view = {"cookie": cookie.split(":")[-1][1:], "flag": True}
     obj = requests.post(API_URL+'viewcart', json=view, verify=False)
     return obj
 
@@ -84,6 +86,7 @@ try:
     check(items)
 
     logging.info("Success, the program is working as expected")
+
 
 except AssertionError as msg:
     logging.error(msg)
