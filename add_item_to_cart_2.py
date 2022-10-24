@@ -1,3 +1,4 @@
+# דרך שניה
 import requests
 import base64
 import logging
