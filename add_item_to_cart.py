@@ -7,14 +7,19 @@ import logging
 
 # Creating a log file for documentation
 logging.basicConfig(filename="message_log.log", level=logging.INFO, format="%(asctime)s %(message)s")
-
+id_item = '3'
+message_id = 'No find was found whose ID is equal to 3'
+name_item = 'Nexus 6'
+message_name = 'The name is not worth it Nexus 6'
+user_name = 'anonymous number one'
+password = '20220914'
 
 def login():
     # Login button search
     driver.find_element(By.LINK_TEXT, "Log in").click()
     # Entering the username and password in the appropriate places
-    driver.find_element(By.ID, 'loginusername').send_keys('anonymous number one')
-    driver.find_element(By.ID, 'loginpassword').send_keys('20220914')
+    driver.find_element(By.ID, 'loginusername').send_keys(user_name)
+    driver.find_element(By.ID, 'loginpassword').send_keys(password)
     # Login
     driver.find_element(By.XPATH, "//button[text()='Log in']").click()
 
@@ -24,12 +29,12 @@ def login():
 
 def add_nexus():
     # Nexus 6 product search
-    element = driver.find_element(By.LINK_TEXT, 'Nexus 6')
+    element = driver.find_element(By.LINK_TEXT, name_item)
     # Checking if the product found is Nexus 6
-    assert element.text == 'Nexus 6', 'The name is not worth it Nexus 6'
+    assert element.text == name_item, message_name
     # Checking if the ID of the found product is equal to 3, according to the link to which the product refers
     link = element.get_attribute('href')
-    assert link[-1] == '3', 'No find was found whose ID is equal to 3'
+    assert link[-1] == id_item, message_id
     # Enter the product details
     element.click()
 
@@ -37,7 +42,7 @@ def add_nexus():
     time.sleep(5)
 
     # Checking if the product entered is a Nexus 6
-    assert driver.find_element(By.XPATH, '//h2[@class="name"]').text == 'Nexus 6', 'The name is not worth it Nexus 6'
+    assert driver.find_element(By.XPATH, '//h2[@class="name"]').text == name_item, message_name
     # Adding the product to the cart
     driver.find_element(By.LINK_TEXT, 'Add to cart').click()
 
