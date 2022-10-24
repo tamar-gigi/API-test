@@ -11,8 +11,12 @@ id_item = '3'
 message_id = 'No find was found whose ID is equal to 3'
 name_item = 'Nexus 6'
 message_name = 'The name is not worth it Nexus 6'
+price_item = 650
+message_price = 'The price is not worth 650'
+message_count = 'More than one item'
 user_name = 'anonymous number one'
 password = '20220914'
+
 
 def login():
     # Login button search
@@ -60,11 +64,11 @@ def validate():
     table = pd.read_html(driver.page_source)[0]
 
     # Checking if there is one or more products in the cart
-    assert len(table) == 1, 'More than one item'
+    assert len(table) == 1, message_count
     # Checking if the price of the product in the cart is 650
-    assert table['Price'][0] == 650, 'The price is not worth 650'
+    assert table['Price'][0] == price_item, message_price
     # Checking if the name of the product in the cart is a Nexus 6
-    assert table['Title'][0] == 'Nexus 6', 'The name is not worth it Nexus 6'
+    assert table['Title'][0] == name_item, message_name
 
 
 try:
